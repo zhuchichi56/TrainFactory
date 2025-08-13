@@ -2,5 +2,10 @@
 
 # test DiveSFT
 
+test
+tes
+tes
+tset
+st
 
 test
