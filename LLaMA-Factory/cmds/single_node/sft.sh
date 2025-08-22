@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export HF_DATASETS_CACHE="/fs-computility/llmit_d/shared/zhuhe/LLaMA-Factory/data/cache"
+# export HF_DATASETS_CACHE="/fs-computility/llmit_d/shared/zhuhe/LLaMA-Factory/data/cache"
 
 TARGET_MODEL=${1}
 TEMPLATE=${2}
@@ -13,28 +13,26 @@ N_NODE=1            # 使用平台注入的节点总数
 PER_DEVICE_BATCH_SIZE=2
 GRAD_ACCUM_STEPS=$((TOTAL_BATCH_SIZE / (PER_DEVICE_BATCH_SIZE * GPUS_PER_NODE * N_NODE)))
 
-OUTPUT_DIR=/fs-computility/llmit_d/shared/zhuhe/sft_model/${TARGET_MODEL}-${NAME}
-
-TRAIN_FULL_DIR="/fs-computility/llmit_d/shared/zhuhe/sft_model"
-mkdir -p ${TRAIN_FULL_DIR}
-mkdir -p ${TRAIN_FULL_DIR}/logs
-output_file="${TRAIN_FULL_DIR}/${TARGET_MODEL}-${NAME}.yaml"
-LOG_FILE=${TRAIN_FULL_DIR}/logs/${TARGET_MODEL}-${NAME}.log
+OUTPUT_DIR=/volume/pt-train/users/wzhang/ghchen/zh/saves/sft/${TARGET_MODEL}-${NAME}
+mkdir -p ${OUTPUT_DIR}
+mkdir -p ${OUTPUT_DIR}/logs
+output_file="${OUTPUT_DIR}/${TARGET_MODEL}-${NAME}.yaml"
+LOG_FILE=${OUTPUT_DIR}/logs/${TARGET_MODEL}-${NAME}.log
 
 cat <<EOL > $output_file
 ### model
-model_name_or_path: /fs-computility/llmit_d/shared/models/${TARGET_MODEL}
-# trust_remote_code: true
+model_name_or_path: /volume/pt-train/models/${TARGET_MODEL}
+trust_remote_code: true
 
 ### method
 stage: sft
 do_train: true
 finetuning_type: full
-deepspeed: /fs-computility/llmit_d/shared/liumengjie/LLaMA-Factory/examples/deepspeed/ds_z3_config.json
+deepspeed: examples/deepspeed/ds_z3_config.json
 
 ### dataset
 dataset: select_data
-# template: ${TEMPLATE}
+template: ${TEMPLATE}
 cutoff_len: 2048
 overwrite_cache: false
 preprocessing_num_workers: 32

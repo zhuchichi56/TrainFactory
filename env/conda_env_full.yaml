@@ -1,4 +1,4 @@
-name: /fs-computility/llmit_d/shared/zhuangxinlin/envs/lm-eval-harness
+name: lm-eval-harness
 channels:
   - conda-forge
   - defaults
