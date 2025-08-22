@@ -1,0 +1,3 @@
+2025-02-24 18:35:48,341 - INFO - Starting upload for: LLAMA3.2-3b-Alpaca_data_cleaned
+2025-02-24 18:35:48,341 - INFO - Creating model: chichi56/llama3.2-3b-alpaca_data_cleaned
+2025-02-24 18:35:51,189 - INFO - Pushing model files from: /data/zhe/new/llama3.2-3b-alpaca_data_cleaned
