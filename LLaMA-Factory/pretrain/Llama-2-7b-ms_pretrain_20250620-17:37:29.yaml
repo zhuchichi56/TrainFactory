@@ -1,0 +1,34 @@
+### model
+model_name_or_path: /fs-computility/llmit_d/shared/models/Llama-2-7b-ms
+
+### method
+stage: pt
+do_train: true
+finetuning_type: full
+
+### dataset
+dataset: c4_demo
+cutoff_len: 4096
+max_samples: 1000
+overwrite_cache: true
+preprocessing_num_workers: 16
+deepspeed: /fs-computility/llmit_d/shared/zhuhe/LLaMA-Factory/examples/deepspeed/ds_z3_config.json
+
+### output
+output_dir: /fs-computility/llmit_d/shared/zhuhe/trained_model/saves/Llama-2-7b-ms/pretrain-full
+logging_steps: 10
+save_steps: 500
+plot_loss: true
+report_to: wandb
+overwrite_output_dir: true
+
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 16
+learning_rate: 1.0e-4
+num_train_epochs: 1.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+bf16: true
+ddp_timeout: 180000000
+seed: 42

@@ -1,0 +1,7 @@
+name: /fs-computility/llmit_d/shared/zhuangxinlin/envs/lm-eval-harness
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+  - ipykernel
+prefix: /fs-computility/llmit_d/shared/zhuangxinlin/envs/lm-eval-harness
