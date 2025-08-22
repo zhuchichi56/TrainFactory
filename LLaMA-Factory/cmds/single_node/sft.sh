@@ -21,7 +21,7 @@ LOG_FILE=${OUTPUT_DIR}/logs/${TARGET_MODEL}-${NAME}.log
 
 cat <<EOL > $output_file
 ### model
-model_name_or_path: /volume/pt-train/models/${TARGET_MODEL}
+model_name_or_path: /volume/pt-train/users/wzhang/ghchen/models/${TARGET_MODEL}
 trust_remote_code: true
 
 ### method

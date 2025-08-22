@@ -2,23 +2,23 @@
 
 import subprocess
 import json
-
 import os
+os.environ["HF_ENDPOINT"] = "https://huggingface.cn"
+os.environ["WANDB_MODE"] ="offline"
+
 # alias proxy_on='export http_proxy=http://100.68.170.107:3128 ; export https_proxy=http://100.68.170.107:3128 ; export HTTP_PROXY=http://100.68.170.107:3128 ; export HTTPS_PROXY=http://100.68.170.107:3128'
 # os.environ["HTTP_PROXY"] = "http://100.68.170.107:3128"
 # os.environ["HTTPS_PROXY"] = "http://100.68.170.107:3128"
 # os.environ["http_proxy"] = "http://100.68.170.107:3128"
 # os.environ["https_proxy"] = "http://100.68.170.107:3128"
-os.environ["HF_ENDPOINT"] = "https://huggingface.cn"
 
-
-def test_connect_google():
-    import requests
-    response = requests.get("https://www.google.com")
-    if response.status_code == 200:
-        print("Successfully connected to Google")
-    else:
-        print("Failed to connect to Google")
+# def test_connect_google():
+#     import requests
+#     response = requests.get("https://www.google.com")
+#     if response.status_code == 200:
+#         print("Successfully connected to Google")
+#     else:
+#         print("Failed to connect to Google")
 
 
 def load_jsonl(data_path):
@@ -66,16 +66,13 @@ def eval_model(model_path, gpus_per_node=4):
 
 
 if __name__ == "__main__":
-    model_name = "Llama-2-7b-ms"
-    template = "llama2"
-    save_path = "/fs-computility/llmit_d/shared/zhuhe/sft_model"
-
-
+    model_name = "Llama-2-7b"
+    template = "alpaca"
     configs = [
-        ("/fs-computility/llmit_d/shared/zhuhe/Gap/landsacpe/experiment_data/alpaca_5k_random.jsonl", "alpaca_5k_random", "Llama-2-7b-ms"),
-        ("/fs-computility/llmit_d/shared/zhuhe/Gap/landsacpe/experiment_data/alpaca_sft.jsonl", "alpaca_5k_full", "Llama-2-7b-ms"),
+        ("/volume/pt-train/users/wzhang/ghchen/zh/code/TrainFactory/data/alpaca_sft.jsonl", "alpaca_full", "Llama-2-7b"),
+        # ("/fs-computility/llmit_d/shared/zhuhe/Gap/landsacpe/experiment_data/alpaca_sft.jsonl", "alpaca_5k_full", "Llama-2-7b"),
     ]
-    
+
     GPUS_PER_NODE = 8
     for data_path, info, model_name in configs:
         try: 
