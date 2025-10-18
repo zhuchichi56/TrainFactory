@@ -6,6 +6,10 @@ import os
 os.environ["HF_ENDPOINT"] = "https://huggingface.cn"
 os.environ["WANDB_MODE"] ="offline"
 
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3"
+
+
 # alias proxy_on='export http_proxy=http://100.68.170.107:3128 ; export https_proxy=http://100.68.170.107:3128 ; export HTTP_PROXY=http://100.68.170.107:3128 ; export HTTPS_PROXY=http://100.68.170.107:3128'
 # os.environ["HTTP_PROXY"] = "http://100.68.170.107:3128"
 # os.environ["HTTPS_PROXY"] = "http://100.68.170.107:3128"
@@ -41,7 +45,7 @@ def sft(target_model, template, data_path, info, mode="sft", packing=False, gpus
     elif mode == "debug":
         cmd = f"./cmds/single_node/sft_debug.sh {target_model} {template} {info} {packing} 1"
     else:
-        cmd = f"./cmds/single_node/sft.sh {target_model} {template} {info} {packing} {gpus_per_node}"
+        cmd = f"./sft.sh {target_model} {template} {info} {packing} {gpus_per_node}"
     subprocess.run(cmd, shell=True)
     
 
@@ -54,7 +58,7 @@ def eval_model(model_path, gpus_per_node=4):
     print(f"评测: {model_path}")
     cmd = f"""bash -c " 
     export HF_ENDPOINT=https://huggingface.cn && \
-    source activate /fs-computility/llmit_d/shared/zhuangxinlin/envs/lm-eval-harness && \
+    source activate /volume/pt-train/users/wzhang/ghchen/laip/miniconda3/envs/lm-eval-harness && \
     accelerate launch -m --main_process_port=8189 --num_processes={gpus_per_node} lm_eval \
         --model hf --model_args pretrained={model_path} --trust_remote_code \
         --tasks arc_challenge,hellaswag,mmlu,truthfulqa \
@@ -69,11 +73,12 @@ if __name__ == "__main__":
     model_name = "Llama-2-7b"
     template = "alpaca"
     configs = [
-        ("/volume/pt-train/users/wzhang/ghchen/zh/code/TrainFactory/data/alpaca_sft.jsonl", "alpaca_full", "Llama-2-7b"),
-        # ("/fs-computility/llmit_d/shared/zhuhe/Gap/landsacpe/experiment_data/alpaca_sft.jsonl", "alpaca_5k_full", "Llama-2-7b"),
+        ("/volume/pt-train/users/wzhang/ghchen/zh/code/loss-landscape/data/train/alpaca_10k.jsonl", "alpaca_10k", "Llama-2-7b"),
+        ("/volume/pt-train/users/wzhang/ghchen/zh/code/loss-landscape/data/train/metamath_10k.jsonl", "metamath_10k", "Llama-2-7b"),
+        ("/volume/pt-train/users/wzhang/ghchen/zh/code/loss-landscape/data/train/magicoder_10k.jsonl", "magicoder_10k", "Llama-2-7b"),
     ]
 
-    GPUS_PER_NODE = 8
+    GPUS_PER_NODE = 4
     for data_path, info, model_name in configs:
         try: 
             sft(model_name, template, data_path, info, gpus_per_node=GPUS_PER_NODE)
@@ -81,8 +86,8 @@ if __name__ == "__main__":
             print(f"Error: {e}")
             continue
     # 评测所有模型
-    # for _, info, model_name in configs:
-    #     model_path = f"/fs-computility/llmit_d/shared/zhuhe/sft_model/{model_name}-{info}"
-    #     eval_model(model_path, gpus_per_node=GPUS_PER_NODE)
+    for _, info, model_name in configs:
+        model_path = f"/volume/pt-train/users/wzhang/ghchen/zh/saves/sft/cross_ana/{model_name}-{info}"
+        eval_model(model_path, gpus_per_node=GPUS_PER_NODE)
         
     

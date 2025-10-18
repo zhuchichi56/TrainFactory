@@ -14,11 +14,6 @@ def load_jsonl(data_path):
     return data
 
 
-
-
-
-
-# 这个使用conda activate llf 环境
 def sft(target_model, template, data_path, info, lora=False):
     import shutil
     target_path = "/fs-computility/llmit_d/shared/zhuhe/LLaMA-Factory/data/sft.jsonl"
@@ -51,11 +46,19 @@ if __name__ == "__main__":
         # "/fs-computility/llmit_d/shared/zhuhe/Gap/landsacpe/selection/selection/alpaca_5k_longest.jsonl",
         # "/fs-computility/llmit_d/shared/zhuhe/Gap/landsacpe/selection/selection/alpaca_5k_random.jsonl"
         # "/fs-computility/llmit_d/shared/zhuhe/Gap/landsacpe/data/alpaca_sft_ifd_ray1_top10.jsonl"
-        "/fs-computility/llmit_d/shared/zhuhe/sft_model/Llama-2-7b-ms-5k_longest",
-        "/fs-computility/llmit_d/shared/zhuhe/sft_model/Llama-2-7b-ms-5k_random",
-        "/fs-computility/llmit_d/shared/zhuhe/sft_model/Llama-2-7b-ms-5k_gradient",
-        "/fs-computility/llmit_d/shared/zhuhe/sft_model/Llama-2-7b-ms-5k_landscape",
-        "/fs-computility/llmit_d/shared/zhuhe/sft_model/Llama-2-7b-ms-5k_ifd",
+        # "/fs-computility/llmit_d/shared/zhuhe/sft_model/Llama-2-7b-ms-5k_longest",
+        # "/fs-computility/llmit_d/shared/zhuhe/sft_model/Llama-2-7b-ms-5k_random",
+        # "/fs-computility/llmit_d/shared/zhuhe/sft_model/Llama-2-7b-ms-5k_gradient",
+        # "/fs-computility/llmit_d/shared/zhuhe/sft_model/Llama-2-7b-ms-5k_landscape",
+        # "/fs-computility/llmit_d/shared/zhuhe/sft_model/Llama-2-7b-ms-5k_ifd",
+        "/volume/pt-train/users/wzhang/ghchen/zh/code/loss-landscape/safety/experiment_data/safe_loss_low_20pct.jsonl",
+        "/volume/pt-train/users/wzhang/ghchen/zh/code/loss-landscape/safety/experiment_data/safe_flatness_high_20pct.jsonl",
+        "/volume/pt-train/users/wzhang/ghchen/zh/code/loss-landscape/safety/experiment_data/safe_flatness_low_20pct.jsonl",
+        "/volume/pt-train/users/wzhang/ghchen/zh/code/loss-landscape/safety/experiment_data/safe_grad_high_20pct.jsonl",
+        "/volume/pt-train/users/wzhang/ghchen/zh/code/loss-landscape/safety/experiment_data/safe_grad_low_20pct.jsonl",
+        "/volume/pt-train/users/wzhang/ghchen/zh/code/loss-landscape/safety/experiment_data/safe_rank_fusion_20pct.jsonl",
+        "/volume/pt-train/users/wzhang/ghchen/zh/code/loss-landscape/safety/experiment_data/safe_random_20pct.jsonl"
+
         
 
     ]

@@ -1,17 +1,24 @@
 #!/bin/bash
 
-# export HF_DATASETS_CACHE="/fs-computility/llmit_d/shared/zhuhe/LLaMA-Factory/data/cache"
-
 TARGET_MODEL=${1}
 TEMPLATE=${2}
 NAME=${3}
 PACKING=${4}
 GPUS_PER_NODE=${5}
 TOTAL_BATCH_SIZE=128
-# GPUS_PER_NODE=8     # 使用平台注入的GPU数量
-N_NODE=1            # 使用平台注入的节点总数
-PER_DEVICE_BATCH_SIZE=2
+N_NODE=1
+PER_DEVICE_BATCH_SIZE=8
 GRAD_ACCUM_STEPS=$((TOTAL_BATCH_SIZE / (PER_DEVICE_BATCH_SIZE * GPUS_PER_NODE * N_NODE)))
+
+echo "TARGET_MODEL: ${TARGET_MODEL}"
+echo "TEMPLATE: ${TEMPLATE}"
+echo "NAME: ${NAME}"
+echo "PACKING: ${PACKING}"
+echo "GPUS_PER_NODE: ${GPUS_PER_NODE}"
+echo "TOTAL_BATCH_SIZE: ${TOTAL_BATCH_SIZE}"
+echo "N_NODE: ${N_NODE}"
+echo "PER_DEVICE_BATCH_SIZE: ${PER_DEVICE_BATCH_SIZE}"
+echo "GRAD_ACCUM_STEPS: ${GRAD_ACCUM_STEPS}"
 
 OUTPUT_DIR=/volume/pt-train/users/wzhang/ghchen/zh/saves/sft/${TARGET_MODEL}-${NAME}
 mkdir -p ${OUTPUT_DIR}
@@ -21,7 +28,7 @@ LOG_FILE=${OUTPUT_DIR}/logs/${TARGET_MODEL}-${NAME}.log
 
 cat <<EOL > $output_file
 ### model
-model_name_or_path: /volume/pt-train/users/wzhang/ghchen/models/${TARGET_MODEL}
+model_name_or_path: /volume/pt-train/users/wzhang/ghchen/zh/models/${TARGET_MODEL}
 trust_remote_code: true
 
 ### method

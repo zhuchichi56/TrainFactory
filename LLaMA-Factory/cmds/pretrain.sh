@@ -1,7 +1,7 @@
 #!/bin/bash
 
 START_TIME=`date +%Y%m%d-%H:%M:%S`
-export HF_DATASETS_CACHE="/fs-computility/llmit_d/shared/zhuhe/LLaMA-Factory/data/cache"
+export HF_DATASETS_CACHE="/volume/pt-train/users/wzhang/ghchen/zh/code/TrainFactory/LLaMA-Factory/data/cache"
 
 ### 基本参数设置
 # DATA_SETTING=${1:-"slimpajama_subset"}
@@ -16,9 +16,9 @@ NUM_TRAIN_EPOCHS=1
 CUTOFF_LEN=4096
 GRAD_ACCUM_STEPS=$((TOTAL_BATCH_SIZE / (PER_DEVICE_BATCH_SIZE * GPUS_PER_NODE)))
 LEARNING_RATE=1.0e-4
-OUTPUT_DIR=/fs-computility/llmit_d/shared/zhuhe/trained_model/saves/${TARGET_MODEL}/pretrain-full
+OUTPUT_DIR=/volume/pt-train/users/wzhang/ghchen/zh/code/TrainFactory/LLaMA-Factory/saves/${TARGET_MODEL}/pretrain-full
 # 计算MAX_STEPS
-DATASET_SIZE=$(wc -l < "/fs-computility/llmit_d/shared/zhuhe/LLaMA-Factory/data/merged_sample.jsonl")
+DATASET_SIZE=$(wc -l < "/volume/pt-train/users/wzhang/ghchen/zh/code/TrainFactory/LLaMA-Factory/data/merged_sample.jsonl")
 echo "DATASET_SIZE=$DATASET_SIZE"
 MAX_STEPS=$((DATASET_SIZE * NUM_TRAIN_EPOCHS / TOTAL_BATCH_SIZE))
 echo "MAX_STEPS=$MAX_STEPS"
@@ -27,7 +27,7 @@ echo "MAX_STEPS=$MAX_STEPS"
 echo "总批次大小: ${TOTAL_BATCH_SIZE}"
 echo "梯度累积步数: ${GRAD_ACCUM_STEPS}"
 
-TRAIN_FULL_DIR="/fs-computility/llmit_d/shared/zhuhe/LLaMA-Factory/pretrain"
+TRAIN_FULL_DIR="/volume/pt-train/users/wzhang/ghchen/zh/code/TrainFactory/LLaMA-Factory/pretrain"
 mkdir -p ${TRAIN_FULL_DIR}
 mkdir -p ${TRAIN_FULL_DIR}/logs
 mkdir -p ${TRAIN_FULL_DIR}/saves
@@ -40,7 +40,7 @@ echo "正在创建配置文件: $output_file"
 
 cat <<EOL > $output_file
 ### model
-model_name_or_path: /fs-computility/llmit_d/shared/models/${TARGET_MODEL}
+model_name_or_path: /volume/pt-train/users/wzhang/ghchen/zh/code/TrainFactory/LLaMA-Factory/models/${TARGET_MODEL}
 
 ### method
 stage: pt
@@ -57,7 +57,7 @@ buffer_size: 10000
 max_steps: ${MAX_STEPS}
 overwrite_cache: true
 preprocessing_num_workers: 1
-deepspeed: /fs-computility/llmit_d/shared/zhuhe/LLaMA-Factory/examples/deepspeed/ds_z3_config.json
+deepspeed: /volume/pt-train/users/wzhang/ghchen/zh/code/TrainFactory/LLaMA-Factory/examples/deepspeed/ds_z3_config.json
 
 ### output
 output_dir: ${OUTPUT_DIR}
@@ -102,4 +102,3 @@ echo "开始训练..."
 llamafactory-cli train ${output_file} 2>&1 | tee ${LOG_FILE}
 
 echo "训练完成。查看日志: ${LOG_FILE}"
-

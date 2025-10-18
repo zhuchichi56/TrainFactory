@@ -55,9 +55,19 @@ def resolve_and_copy_symlinks(model_pth: str, output_pth: str =None):
         shutil.copy2(item['blob_pth'], os.path.join(output_pth, item['symlink_file']))
     
 
-print('Running the function')
-resolve_and_copy_symlinks('/home/zhe/.cache/huggingface/hub/models--mistralai--Ministral-8B-Instruct-2410','/data/zhe/mistralai--Ministral-8B-Instruct-2410')
+
+# (llf) root@cgh-cpu-0:/volume/pt-train/users/wzhang/ghchen/models# l
+# Llama-2-13b/  Llama-2-13b-chat/  Llama-2-7b/  Llama-2-7b-chat/  beaver-7b-v1.0-cost/
+
+# /volume/pt-train/users/wzhang/ghchen/zh/models
+
+
+# print('Running the function')
+# # for model_name in [
+# for model_name in os.listdir(''):
+resolve_and_copy_symlinks(f'/volume/pt-train/users/wzhang/ghchen/zh/models/models--meta-llama--Llama-2-7b-hf', f'/volume/pt-train/users/wzhang/ghchen/zh/models/Llama-2-7b')
 # resolve_and_copy_symlinks('/home/admin/.cache/huggingface/hub/models--codellama--CodeLlama-7b-Python-hf','/home/admin/test/CodeLlama-7b-Python-hf')
+
 
 
    
