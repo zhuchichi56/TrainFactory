@@ -733,5 +733,40 @@
       "prompt": "instruction",
       "response": "response"
     }
+  },
+  "SELECTED_DATA_VLM": {
+    "file_name": "selected_data_vlm.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages",
+      "images": "images"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant"
+    }
+  },
+  "SELECTED_DATA_VLM_DPO": {
+    "file_name": "selected_data_vlm_dpo.jsonl",
+    "ranking": true,
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "conversations",
+      "chosen": "chosen",
+      "rejected": "rejected",
+      "images": "images"
+    }
+  },
+  "SELECTED_DATA_DPO": {
+    "file_name": "selected_data_dpo.jsonl",
+    "ranking": true,
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "conversations",
+      "chosen": "chosen",
+      "rejected": "rejected"
+    }
   }
 }
