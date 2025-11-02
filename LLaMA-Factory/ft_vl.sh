@@ -123,7 +123,6 @@ torchrun --nnodes 1 --node_rank 0 --nproc_per_node $num_processes \
         --gradient_accumulation_steps $gradient_accumulation_steps \
         --per_device_eval_batch_size 1 \
         --save_steps 3125 \
-        --eval_steps 15 \
         --cutoff_len 8192 \
         --image_max_pixels 262144 \
         --video_max_pixels 16384 \
@@ -137,10 +136,14 @@ torchrun --nnodes 1 --node_rank 0 --nproc_per_node $num_processes \
         --plot_loss \
         --preprocessing_num_workers 16 \
         --ddp_timeout 180000000 \
-        --eval_strategy "no" \
+        --eval_strategy "step"  \
+        --eval_steps 100 \
+        --val_size 0.01 \
         --freeze_vision_tower true \
         --freeze_multi_modal_projector true \
         --freeze_language_model false 
+        # --eval_steps 15 \
+        # --eval_strategy "no" \
          # --freeze_vision_tower true \
         # --freeze_multi_modal_projector false \
         # --freeze_language_model false \
