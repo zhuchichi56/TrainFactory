@@ -1,6 +1,14 @@
 # 忽略 data 文件夹中除 dataset_info.json 外的所有文件
+
+
 TrainFactory/LLaMA-Factory/data/*
 !TrainFactory/LLaMA-Factory/data/dataset_info.json
+!TrainFactory/LLaMA-Factory/data/alpaca_en_demo.json
+!TrainFactory/LLaMA-Factory/data/alpaca_zh_demo.json
+!TrainFactory/LLaMA-Factory/data/belle_multiturn
+!TrainFactory/LLaMA-Factory/data/c4_demo.jsonl
+
+
 
 # 忽略模型输出目录
 TrainFactory/LLaMA-Factory/output/
