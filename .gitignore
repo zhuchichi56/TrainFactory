@@ -1,0 +1,39 @@
+# 忽略 data 文件夹中除 dataset_info.json 外的所有文件
+TrainFactory/LLaMA-Factory/data/*
+!TrainFactory/LLaMA-Factory/data/dataset_info.json
+
+# 忽略模型输出目录
+TrainFactory/LLaMA-Factory/output/
+
+# 忽略常见的 Python 缓存与临时文件
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+*.log
+*.tmp
+
+# 忽略虚拟环境相关
+.env
+.venv
+*.egg-info/
+build/
+dist/
+
+# 忽略模型参数与权重文件
+*.bin
+*.pt
+*.ckpt
+*.safetensors
+*.h5
+
+# 忽略大文件缓存与检查点
+checkpoints/
+runs/
+wandb/
+logs/
+cache/
+
+、
+
